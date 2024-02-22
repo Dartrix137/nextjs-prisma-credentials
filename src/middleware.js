@@ -3,5 +3,5 @@ export default withAuth({
   secret: process.env.NEXTAUTH_SECRET,
 });
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: ["/dashboard", "/products/:path*", "/new/:path*"],
 };

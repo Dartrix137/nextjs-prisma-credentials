@@ -19,6 +19,7 @@ function RegisterPage() {
                 'Content-Type': 'application/json'
             }
         })
+        console.log(res)
         if(res.ok){
             router.push('/auth/login')
         }
