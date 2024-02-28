@@ -1,6 +1,7 @@
 "use client"
 import { useForm } from 'react-hook-form'
 import {useRouter} from 'next/navigation'
+import url from '@/libs/url'
 function RegisterPage() {
     const { register, handleSubmit, formState:{errors} } = useForm()
     const router=useRouter()
@@ -8,7 +9,7 @@ function RegisterPage() {
         if(data.password!== data.confirmPassword){
             return alert("Passwords do not match")
         }
-        const res= await fetch(`${env(NEXTAUTH_URL)}/api/auth/register`,{
+        const res= await fetch(`${url}/api/auth/register`,{
             method:"POST",
             body: JSON.stringify({
                 username:data.username,

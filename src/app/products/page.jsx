@@ -2,10 +2,11 @@ import axios from 'axios'
 import ProductCard from '@/components/ProductCard'
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
+import url from '@/libs/url'
 
 async function loadProducts(){
   const data=await getServerSession(authOptions)
-  const res = await axios.get(`${env(NEXTAUTH_URL)}/api/products` + "?id=" + data.user.id)
+  const res = await axios.get(`${url}}/api/products` + "?id=" + data.user.id)
   return res.data
 }
 

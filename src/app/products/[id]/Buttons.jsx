@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import url from '@/libs/url'
 
 function Buttons({ productId }) {
     const router = useRouter()
@@ -9,8 +10,7 @@ function Buttons({ productId }) {
     const handleDelete = async (e) => {
         e.preventDefault()
         if (confirm('Are you sure you want to delete this product?')) {
-            const res = await axios.delete(`${env(NEXTAUTH_URL)}/api/products/${productId}?id=${session.data.user.id}`)
-            console.log(session.data.user.id)
+            const res = await axios.delete(`${url}/api/products/${productId}?id=${session.data.user.id}`)
             if (res.status === 204) {
                 router.push('/products')
                 router.refresh()
