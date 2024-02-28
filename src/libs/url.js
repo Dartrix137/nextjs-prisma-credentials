@@ -1,3 +1,3 @@
-const url=process.env.NEXTAUTH_URL
+const url="/"
 
 export default url
