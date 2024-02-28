@@ -9,7 +9,7 @@ function Buttons({ productId }) {
     const handleDelete = async (e) => {
         e.preventDefault()
         if (confirm('Are you sure you want to delete this product?')) {
-            const res = await axios.delete(`http://localhost:3000/api/products/${productId}?id=${session.data.user.id}`)
+            const res = await axios.delete(`${env(NEXTAUTH_URL)}/api/products/${productId}?id=${session.data.user.id}`)
             console.log(session.data.user.id)
             if (res.status === 204) {
                 router.push('/products')

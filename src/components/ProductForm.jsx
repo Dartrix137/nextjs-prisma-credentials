@@ -36,7 +36,7 @@ function ProductForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!params.id) {
-            const response = await axios.post(`http://localhost:3000/api/products`, formData, {
+            const response = await axios.post(`${env(NEXTAUTH_URL)}/api/products`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -45,8 +45,7 @@ function ProductForm() {
             })
         } else {
             if (session.data) {
-                console.log(`http://localhost:3000/api/products/${params.id}?id=${session.data.user.id}`)
-                const res = await axios.put(`http://localhost:3000/api/products/${params.id}?id=${session.data.user.id}`, formData, {
+                const res = await axios.put(`${env(NEXTAUTH_URL)}/api/products/${params.id}?id=${session.data.user.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -61,7 +60,7 @@ function ProductForm() {
     }
     useEffect(() => {
         if (params.id) {
-            axios.get(`http://localhost:3000/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
+            axios.get(`${env(NEXTAUTH_URL)}/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
                 const data=res.data.filter((product)=>product.id==params.id)[0]
                 setProduct({
                     name: data.name,

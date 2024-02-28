@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
 
 async function loadProducts(){
   const data=await getServerSession(authOptions)
-  const res = await axios.get('http://localhost:3000/api/products' + "?id=" + data.user.id)
+  const res = await axios.get(`${env(NEXTAUTH_URL)}/api/products` + "?id=" + data.user.id)
   return res.data
 }
 

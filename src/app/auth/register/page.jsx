@@ -8,7 +8,7 @@ function RegisterPage() {
         if(data.password!== data.confirmPassword){
             return alert("Passwords do not match")
         }
-        const res= await fetch("http://localhost:3000/api/auth/register",{
+        const res= await fetch(`${env(NEXTAUTH_URL)}/api/auth/register`,{
             method:"POST",
             body: JSON.stringify({
                 username:data.username,
