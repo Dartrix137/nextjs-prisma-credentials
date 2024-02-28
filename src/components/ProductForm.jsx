@@ -37,7 +37,7 @@ function ProductForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!params.id) {
-            const response = await axios.post(`${url}/api/products`, formData, {
+            const response = await axios.post(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -46,7 +46,7 @@ function ProductForm() {
             })
         } else {
             if (session.data) {
-                const res = await axios.put(`${url}/api/products/${params.id}?id=${session.data.user.id}`, formData, {
+                const res = await axios.put(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products/${params.id}?id=${session.data.user.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -61,7 +61,7 @@ function ProductForm() {
     }
     useEffect(() => {
         if (params.id) {
-            axios.get(`${url}/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
+            axios.get(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
                 const data=res.data.filter((product)=>product.id==params.id)[0]
                 setProduct({
                     name: data.name,
