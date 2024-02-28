@@ -61,7 +61,7 @@ function ProductForm() {
     }
     useEffect(() => {
         if (params.id) {
-            axios.get(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products`).then(res => {
+            axios.get(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
                 const data=res.data.filter((product)=>product.id==params.id)[0]
                 setProduct({
                     name: data.name,
