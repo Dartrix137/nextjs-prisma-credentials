@@ -17,6 +17,7 @@ export async function GET(req) {
     })
     return NextResponse.json(result)
   } catch (error) {
+    console.log(error)
     return NextResponse.json({
       message: error.message,
     })
