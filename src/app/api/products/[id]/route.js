@@ -104,7 +104,7 @@ export async function PUT(request, { params }) {
                 },
             })
         }else{
-            result = await prisma.product.update({
+            result = await db.product.update({
                 where: {
                     id: parseInt(params.id),
                     userId:parseInt(userId)
