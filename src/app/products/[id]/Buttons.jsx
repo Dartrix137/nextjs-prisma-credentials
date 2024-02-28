@@ -20,7 +20,7 @@ function Buttons({ productId }) {
     return (
         <div className='flex gap-x-2 justify-center mt-2'>
             <button className='bg-red-500 hover:bg-red-700 text-white py-2 px-3 rounded' onClick={handleDelete}>Delete</button>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-3 rounded' onClick={()=>router.push(`/products/edit/${productId}`)}>Edit</button>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-3 rounded' onClick={()=>router.push(`${url}/products/edit/${productId}`)}>Edit</button>
         </div>
     )
 }
