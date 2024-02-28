@@ -5,7 +5,7 @@ async function Navbar() {
     const session = await getServerSession(authOptions)
     return (
         <nav className='flex justify-between items-center text-white bg-gray-800 px-24 py-3 mb-2'>
-            <Link href={!session?.user ? "/":"/products"} className='text-3xl font-bold'>AuthCRUD</Link>
+            <Link href={!session?.user ? "/" : "/products"} className='text-3xl font-bold'>AuthCRUD</Link>
             <ul className='flex gap-x-2'>
                 {!session?.user ? (
                     <>
@@ -26,12 +26,15 @@ async function Navbar() {
                         <li className="rounded hover:bg-slate-600 p-2">
                             <Link href="/products">Products</Link>
                         </li>
-                        
+
                         <li className="rounded hover:bg-slate-600 p-2">
                             <Link href="/api/auth/signout">Logout</Link>
                         </li>
                     </>
                 )}
+                <li className="rounded hover:bg-slate-600 p-2">
+                    <Link href="/about">About</Link>
+                </li>
             </ul>
         </nav>
     )

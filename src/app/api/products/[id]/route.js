@@ -3,10 +3,13 @@ import db from '@/libs/db'
 import cloudinary from '@/libs/cloudinary'
 import processImage from '@/libs/processImage'
 import { unlink } from 'fs/promises'
-
+import { getServerSession } from "next-auth";
+import { authOptions } from '@/app/api/auth/[...nextauth]/route.js'
 export async function GET(req, { params }) {
+    const data = await getServerSession(authOptions);
     const url = new URL(req.url)
-    const userId = url.searchParams.get("id")
+    const userId = data.user.id
+    console.log(userId)
     try {
         const result = await db.product.findUnique({
             where: {
@@ -80,7 +83,7 @@ export async function PUT(request, { params }) {
                     status: 400
                 })
         }
-        if (image) {
+        if (image!=="null") {
             const filePath = await processImage(image)
             const res = await cloudinary.uploader.upload(filePath)
             updateProduct.image = res.secure_url

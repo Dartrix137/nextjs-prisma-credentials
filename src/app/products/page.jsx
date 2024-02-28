@@ -1,26 +1,16 @@
-"use client"
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
 import ProductCard from '@/components/ProductCard'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
 
-function ProductsPage() {
-  const [products, setProducts] = useState([])
-  const session = useSession()
+async function loadProducts(){
+  const data=await getServerSession(authOptions)
+  const res = await axios.get('http://localhost:3000/api/products' + "?id=" + data.user.id)
+  return res.data
+}
 
-  const handleProducts = async () => {
-    if (session.data) {
-      const res = await axios.get('http://localhost:3000/api/products' + "?id=" + session.data.user.id)
-      setProducts(res.data)
-    }
-  }
-
-  useEffect(() => {
-    handleProducts()
-  }, [session])
-
-
-
+async function ProductsPage() {
+  const products=await loadProducts()
   return (
     <>
       {products && (

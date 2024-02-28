@@ -40,30 +40,33 @@ function ProductForm() {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            }).catch((error)=>{
+            }).catch((error) => {
                 alert(error.response.data.message)
             })
-
         } else {
             if (session.data) {
+                console.log(`http://localhost:3000/api/products/${params.id}?id=${session.data.user.id}`)
                 const res = await axios.put(`http://localhost:3000/api/products/${params.id}?id=${session.data.user.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
+                }).catch((error) => {
+                    alert(error.response.data.message)
                 })
             }
         }
-        router.refresh()
         form.current.reset()
         router.push('/products')
+        router.refresh()
     }
     useEffect(() => {
         if (params.id) {
             axios.get(`http://localhost:3000/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
+                const data=res.data.filter((product)=>product.id==params.id)[0]
                 setProduct({
-                    name: res.data[0].name,
-                    description: res.data[0].description,
-                    price: res.data[0].price
+                    name: data.name,
+                    description: data.description,
+                    price: data.price
                 })
             })
         }

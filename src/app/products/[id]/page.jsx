@@ -4,8 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
 async function loadProduct(productId) {
     const data = await getServerSession(authOptions);
+    
     const res = await axios.get(`http://localhost:3000/api/products?id=${data.user.id}/${productId}`)
-    return res.data[0]
+    return res.data.filter((product)=>product.id==productId)[0]
     
 }
 
