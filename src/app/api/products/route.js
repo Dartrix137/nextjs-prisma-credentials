@@ -8,6 +8,7 @@ import { unlink } from 'fs/promises'
 export async function GET(req) {
   const url = new URL(req.url)
   const userId = url.searchParams.get("id")
+  console.log("Hola loco")
   try {
     // Realizar la consulta a la base de datos utilizando userId
     const result = await db.product.findMany({
@@ -17,7 +18,6 @@ export async function GET(req) {
     })
     return NextResponse.json(result)
   } catch (error) {
-    console.log(error)
     return NextResponse.json({
       message: error.message,
     })
