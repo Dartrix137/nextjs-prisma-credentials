@@ -6,7 +6,7 @@ import url from '@/libs/url'
 
 async function loadProducts(){
   const data=await getServerSession(authOptions)
-  const res = await axios.get(`${url}}/api/products` + "?id=" + data.user.id)
+  const res = await axios.get(`${url}/api/products` + "?id=" + data.user.id)
   return res.data
 }
 
