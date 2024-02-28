@@ -46,7 +46,7 @@ function ProductForm() {
             })
         } else {
             if (session.data) {
-                const res = await axios.put(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products/${params.id}?id=${session.data.user.id}`, formData, {
+                const res = await axios.put(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products/${params.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -61,7 +61,7 @@ function ProductForm() {
     }
     useEffect(() => {
         if (params.id) {
-            axios.get(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products?id=${session.data.user.id}/${params.id}`).then(res => {
+            axios.get(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products`).then(res => {
                 const data=res.data.filter((product)=>product.id==params.id)[0]
                 setProduct({
                     name: data.name,

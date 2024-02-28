@@ -9,7 +9,6 @@ export async function GET(req, { params }) {
     const data = await getServerSession(authOptions);
     const url = new URL(req.url)
     const userId = data.user.id
-    console.log(userId)
     try {
         const result = await db.product.findUnique({
             where: {
@@ -37,8 +36,8 @@ export async function GET(req, { params }) {
 
 export async function DELETE(request, { params }) {
     try {
-        const url = new URL(request.url)
-        const userId = parseInt(url.searchParams.get("id"))
+        const data = await getServerSession(authOptions)
+        const userId = data.user.id
         const result = await db.product.delete({
             where: {
                 id: parseInt(params.id),
@@ -66,8 +65,8 @@ export async function DELETE(request, { params }) {
 export async function PUT(request, { params }) {
     try {
         let result=""
-        const url = new URL(request.url)
-        const userId = url.searchParams.get("id")
+        const dat = await getServerSession(authOptions)
+        const userId = dat.user.id
         const data = await request.formData()
         const image = data.get("image")
         const updateProduct = {
