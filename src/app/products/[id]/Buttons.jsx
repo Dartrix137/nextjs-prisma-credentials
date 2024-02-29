@@ -10,7 +10,7 @@ function Buttons({ productId }) {
     const handleDelete = async (e) => {
         e.preventDefault()
         if (confirm('Are you sure you want to delete this product?')) {
-            const res = await axios.delete(`${url}/api/products/${productId}`)
+            const res = await axios.delete(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/products/${productId}`)
             if (res.status === 204) {
                 router.push('/products')
                 router.refresh()
