@@ -9,7 +9,7 @@ function RegisterPage() {
         if(data.password!== data.confirmPassword){
             return alert("Passwords do not match")
         }
-        const res= await fetch(`${url}/api/auth/register`,{
+        const res= await fetch(`https://nextjs-prisma-credentials-ruddy.vercel.app/api/auth/register`,{
             method:"POST",
             body: JSON.stringify({
                 username:data.username,
