@@ -49,13 +49,14 @@ export async function POST(request) {
 
     const filePath = await processImage(image);
     const res= await cloudinary.uploader.upload_stream(filePath)
+    console.log(res)
     const result = await db.product.create({
       data: {
         name: data.get("name"),
         description: data.get("description"),
         price: parseFloat(data.get("price")),
         userId: parseInt(data.get("userId")),
-        image: res.secure
+        image: res.secure_url
       }
     });
     return NextResponse.json({
