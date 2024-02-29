@@ -86,9 +86,7 @@ export async function PUT(request, { params }) {
             const filePath = await processImage(image)
             const res = await cloudinary.uploader.upload(filePath)
             updateProduct.image = res.secure_url
-            if (res) {
-                await unlink(filePath)
-            }
+            
         }
         if(updateProduct.image){
             result = await db.product.update({
