@@ -37,7 +37,7 @@ export async function POST(request) {
           status: 400
         })
     }
-    if (image==="null") {
+    if (image === "null") {
       return NextResponse.json({
         message: "Image is required"
       },
@@ -47,15 +47,22 @@ export async function POST(request) {
     }
 
     const filePath = await processImage(image);
-    const res = await cloudinary.uploader.upload_stream(filePath);
-    console.log(res)
+    let img=""
+    new Promise((resolve) => {
+      cloudinary.v2.uploader.upload_stream((error, uploadResult) => {
+        return resolve(uploadResult);
+      }).end(byteArrayBuffer);
+    }).then((uploadResult) => {
+      console.log(`Buffer upload_stream wth promise success - ${uploadResult.public_id}`);
+      img=uploadResult.secure_url
+    });
     const result = await db.product.create({
       data: {
         name: data.get("name"),
         description: data.get("description"),
         price: parseFloat(data.get("price")),
         userId: parseInt(data.get("userId")),
-        image: res.secure_url
+        image: img
       }
     });
     return NextResponse.json({
