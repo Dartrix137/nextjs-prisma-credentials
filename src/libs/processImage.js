@@ -5,5 +5,5 @@ export default async function processImage(image) {
     const buffer = Buffer.from(bytes)
     const filePath = '/tmp/'+image.name
     await writeFile(filePath, buffer)
-    return filePath;
+    return bytes;
 }
