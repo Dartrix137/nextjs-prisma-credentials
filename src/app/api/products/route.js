@@ -52,6 +52,8 @@ export async function POST(request) {
       cloudinary.uploader.upload_stream((error, res) => {
           return resolve(res);
       }).end(filePath);
+  }).catch((error)=>{
+    console.log(error)
   });
     console.log(res)
     const result = await db.product.create({
