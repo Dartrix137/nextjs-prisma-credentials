@@ -49,8 +49,8 @@ export async function POST(request) {
 
     const filePath = await processImage(image);
     const res= await new Promise((resolve) => {
-      cloudinary.v2.uploader.upload_stream((error, uploadResult) => {
-          return resolve(uploadResult);
+      cloudinary.v2.uploader.upload_stream((error, res) => {
+          return resolve(res);
       }).end(filePath);
   });
     const result = await db.product.create({
