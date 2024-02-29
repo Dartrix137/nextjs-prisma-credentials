@@ -37,6 +37,7 @@ export async function GET(req, { params }) {
 export async function DELETE(request, { params }) {
     try {
         const data = await getServerSession(authOptions)
+        console.log("deleteando")
         const userId = data.user.id
         const result = await db.product.delete({
             where: {
@@ -45,6 +46,7 @@ export async function DELETE(request, { params }) {
             }
         })
         if (result.affectedRows === 0) {
+            console.log("Not found")
             return NextResponse.json({
                 message: "Product not found"
             },
@@ -56,6 +58,7 @@ export async function DELETE(request, { params }) {
             status: 204
         })
     } catch (error) {
+        console.log(error)
         return NextResponse.json({
             message: error.message,
         })
@@ -64,7 +67,7 @@ export async function DELETE(request, { params }) {
 
 export async function PUT(request, { params }) {
     try {
-        let result=""
+        let result = ""
         const dat = await getServerSession(authOptions)
         const userId = dat.user.id
         const data = await request.formData()
@@ -82,39 +85,39 @@ export async function PUT(request, { params }) {
                     status: 400
                 })
         }
-        if (image!=="null") {
-            const filePath = await processImage(image)
+        if (image !== "null") {
+            const filePath = await processImage(image);
             const res = await cloudinary.uploader.upload(filePath)
             updateProduct.image = res.secure_url
-            
+
         }
-        if(updateProduct.image){
+        if (updateProduct.image) {
             result = await db.product.update({
                 where: {
                     id: parseInt(params.id),
-                    userId:parseInt(userId)
+                    userId: parseInt(userId)
                 },
                 data: {
-                    name:updateProduct.name,
-                    description:updateProduct.description,
-                    price:updateProduct.price,
-                    image:updateProduct.image
+                    name: updateProduct.name,
+                    description: updateProduct.description,
+                    price: updateProduct.price,
+                    image: updateProduct.image
                 },
             })
-        }else{
+        } else {
             result = await db.product.update({
                 where: {
                     id: parseInt(params.id),
-                    userId:parseInt(userId)
+                    userId: parseInt(userId)
                 },
                 data: {
-                    name:updateProduct.name,
-                    description:updateProduct.description,
-                    price:updateProduct.price,
+                    name: updateProduct.name,
+                    description: updateProduct.description,
+                    price: updateProduct.price,
                 },
             })
         }
-        
+
         if (result.affectedRows === 0) {
             return NextResponse.json({
                 message: "Product not found"
@@ -126,7 +129,7 @@ export async function PUT(request, { params }) {
         const updatedProduct = await db.product.findUnique({
             where: {
                 id: parseInt(params.id),
-                userId:parseInt(userId)
+                userId: parseInt(userId)
             }
         })
         return NextResponse.json(updatedProduct)
