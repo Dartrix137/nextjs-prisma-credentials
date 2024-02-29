@@ -30,7 +30,6 @@ function ProductForm() {
     formData.append("description", product.description)
     formData.append("price", product.price)
     if (file) {
-        console.log(file)
         formData.append("image", file)
     } else {
         formData.append("image", null)
