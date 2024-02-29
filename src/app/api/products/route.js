@@ -3,6 +3,7 @@ import db from '@/libs/db'
 import cloudinary from '@/libs/cloudinary'
 import processImage from '@/libs/processImage'
 import { unlink } from 'fs/promises'
+import { error } from 'console'
 
 
 export async function GET(req) {
@@ -47,22 +48,18 @@ export async function POST(request) {
     }
 
     const filePath = await processImage(image);
-    let img=""
-    new Promise((resolve) => {
+    const res= await new Promise((resolve) => {
       cloudinary.v2.uploader.upload_stream((error, uploadResult) => {
-        return resolve(uploadResult);
-      }).end(byteArrayBuffer);
-    }).then((uploadResult) => {
-      console.log(`Buffer upload_stream wth promise success - ${uploadResult.public_id}`);
-      img=uploadResult.secure_url
-    });
+          return resolve(uploadResult);
+      }).end(filePath);
+  });
     const result = await db.product.create({
       data: {
         name: data.get("name"),
         description: data.get("description"),
         price: parseFloat(data.get("price")),
         userId: parseInt(data.get("userId")),
-        image: img
+        image: res.secure
       }
     });
     return NextResponse.json({
