@@ -7,8 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from '@/app/api/auth/[...nextauth]/route.js'
 export async function GET(req, { params }) {
     const data = await getServerSession(authOptions);
-    const url = new URL(req.url)
-    const userId = data.user.id
+    const userId = parseInt(data.user.id)
     try {
         const result = await db.product.findUnique({
             where: {
@@ -37,8 +36,7 @@ export async function GET(req, { params }) {
 export async function DELETE(request, { params }) {
     try {
         const data = await getServerSession(authOptions)
-        console.log("deleteando")
-        const userId = data.user.id
+        const userId = parseInt(data.user.id)
         const result = await db.product.delete({
             where: {
                 id: parseInt(params.id),
@@ -46,7 +44,6 @@ export async function DELETE(request, { params }) {
             }
         })
         if (result.affectedRows === 0) {
-            console.log("Not found")
             return NextResponse.json({
                 message: "Product not found"
             },
@@ -58,7 +55,6 @@ export async function DELETE(request, { params }) {
             status: 204
         })
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             message: error.message,
         })
