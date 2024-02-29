@@ -28,7 +28,7 @@ export async function POST(request) {
   try {
     const data = await request.formData()
     const image = data.get("image")
-    console.log(typeof(image))
+    console.log(image)
     if (!data.get('name')) {
       return NextResponse.json({
         message: "Name is required"
@@ -48,9 +48,7 @@ export async function POST(request) {
 
     const filePath = await processImage(image);
     const res = await cloudinary.uploader.upload(filePath);
-    if (res) {
-      await unlink(filePath);
-    }
+   
     const result = await db.product.create({
       data: {
         name: data.get("name"),
